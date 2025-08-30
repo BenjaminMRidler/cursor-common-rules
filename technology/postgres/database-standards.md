@@ -1,0 +1,223 @@
+# PostgreSQL Database Standards
+
+## 🎯 Purpose
+This file contains common PostgreSQL database standards and best practices that ensure consistency, performance, and maintainability across all database implementations.
+
+## 📋 Naming Conventions
+
+### **Table Naming**
+- **Use snake_case** for table names (e.g., `user_profiles`, `order_items`)
+- **Use plural nouns** for table names (e.g., `users`, `orders`, `products`)
+- **Use descriptive names** that clearly indicate content
+- **Avoid abbreviations** unless they are widely understood
+
+### **Column Naming**
+- **Use snake_case** for column names (e.g., `user_id`, `created_at`, `is_active`)
+- **Use descriptive names** that clearly indicate purpose
+- **Use consistent suffixes** for common fields:
+  - `_id` for primary keys and foreign keys
+  - `_at` for timestamp fields (e.g., `created_at`, `updated_at`)
+  - `_by` for user reference fields (e.g., `created_by`, `updated_by`)
+  - `is_` for boolean fields (e.g., `is_active`, `is_deleted`)
+
+### **Index Naming**
+- **Use descriptive names** that indicate purpose and columns
+- **Follow pattern**: `idx_[table]_[columns]_[type]`
+- **Examples**:
+  - `idx_users_email_unique` (unique index on email)
+  - `idx_orders_user_id_created_at` (composite index)
+  - `idx_users_last_name_first_name` (composite index)
+
+## 🏗️ Schema Design
+
+### **Primary Keys**
+- **ALWAYS use UUID or BIGSERIAL** for primary keys
+- **UUID preferred** for distributed systems and security
+- **BIGSERIAL acceptable** for single-instance systems
+- **NEVER use natural keys** as primary keys
+
+### **Foreign Keys**
+- **ALWAYS define foreign key constraints** for referential integrity
+- **Use consistent naming**: `[table]_[column]_fkey`
+- **Consider cascade options** carefully (RESTRICT, CASCADE, SET NULL)
+- **Index foreign key columns** for performance
+
+### **Temporal Fields**
+- **ALWAYS include temporal fields** for audit and tracking
+- **Standard fields**:
+  - `created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()`
+  - `updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()`
+  - `deleted_at TIMESTAMP WITH TIME ZONE NULL` (for soft deletes)
+
+### **Soft Delete Pattern**
+```sql
+-- Add deleted_at column for soft deletes
+ALTER TABLE users ADD COLUMN deleted_at TIMESTAMP WITH TIME ZONE NULL;
+
+-- Create index for soft delete queries
+CREATE INDEX idx_users_deleted_at ON users(deleted_at) WHERE deleted_at IS NULL;
+
+-- Update queries to exclude soft-deleted records
+SELECT * FROM users WHERE deleted_at IS NULL;
+```
+
+## 📊 Data Types
+
+### **String Types**
+- **VARCHAR(n)** for strings with known maximum length
+- **TEXT** for strings with unknown or unlimited length
+- **CHAR(n)** only for fixed-length strings (e.g., country codes)
+- **Avoid CHAR(1)** for boolean flags - use BOOLEAN instead
+
+### **Numeric Types**
+- **INTEGER** for whole numbers up to 2^31-1
+- **BIGINT** for whole numbers up to 2^63-1
+- **DECIMAL(p,s)** for exact decimal numbers (money, measurements)
+- **REAL** for approximate floating-point numbers
+- **DOUBLE PRECISION** for high-precision floating-point
+
+### **Date/Time Types**
+- **TIMESTAMP WITH TIME ZONE** for absolute time points
+- **DATE** for calendar dates only
+- **TIME WITH TIME ZONE** for time of day with timezone
+- **INTERVAL** for time durations
+
+### **Boolean and JSON**
+- **BOOLEAN** for true/false values
+- **JSONB** for structured data (preferred over JSON)
+- **JSON** for simple JSON data without indexing needs
+
+## 🔍 Indexing Strategy
+
+### **Primary Indexes**
+- **Primary key indexes** are created automatically
+- **Unique constraint indexes** are created automatically
+- **Foreign key indexes** should be created manually for performance
+
+### **Performance Indexes**
+- **Index columns used in WHERE clauses** frequently
+- **Index columns used in ORDER BY** clauses
+- **Index columns used in JOIN** conditions
+- **Consider composite indexes** for multi-column queries
+
+### **Index Best Practices**
+```sql
+-- Single column index
+CREATE INDEX idx_users_email ON users(email);
+
+-- Composite index (most selective column first)
+CREATE INDEX idx_orders_user_id_created_at ON orders(user_id, created_at);
+
+-- Partial index for soft deletes
+CREATE INDEX idx_users_active ON users(email) WHERE deleted_at IS NULL;
+
+-- Expression index for case-insensitive search
+CREATE INDEX idx_users_email_lower ON users(LOWER(email));
+```
+
+## 🚨 Constraints and Validation
+
+### **Check Constraints**
+- **Use check constraints** for data validation
+- **Validate business rules** at the database level
+- **Provide meaningful error messages** when possible
+
+```sql
+-- Example check constraints
+ALTER TABLE users ADD CONSTRAINT chk_users_age_positive CHECK (age > 0);
+ALTER TABLE orders ADD CONSTRAINT chk_orders_amount_positive CHECK (amount > 0);
+ALTER TABLE products ADD CONSTRAINT chk_products_price_range CHECK (price >= 0 AND price <= 10000);
+```
+
+### **Unique Constraints**
+- **Enforce uniqueness** where business rules require it
+- **Consider composite unique constraints** for complex rules
+- **Use partial unique constraints** for conditional uniqueness
+
+```sql
+-- Simple unique constraint
+ALTER TABLE users ADD CONSTRAINT uk_users_email UNIQUE (email);
+
+-- Composite unique constraint
+ALTER TABLE user_roles ADD CONSTRAINT uk_user_roles_user_role UNIQUE (user_id, role_id);
+
+-- Partial unique constraint (only for active users)
+ALTER TABLE users ADD CONSTRAINT uk_users_email_active UNIQUE (email) WHERE deleted_at IS NULL;
+```
+
+## 📈 Performance Optimization
+
+### **Query Optimization**
+- **Use EXPLAIN ANALYZE** to understand query performance
+- **Avoid SELECT *** - specify only needed columns
+- **Use LIMIT** for large result sets
+- **Consider pagination** for large datasets
+
+### **Connection Management**
+- **Use connection pooling** (pgBouncer, application-level pooling)
+- **Set appropriate connection limits** based on server capacity
+- **Monitor connection usage** and adjust as needed
+- **Use prepared statements** for repeated queries
+
+### **Maintenance**
+- **Regular VACUUM** for table maintenance
+- **ANALYZE tables** to update statistics
+- **Monitor table and index sizes**
+- **Archive old data** to maintain performance
+
+## 🔒 Security
+
+### **Access Control**
+- **Use least privilege principle** for database users
+- **Create specific roles** for different application needs
+- **Limit direct table access** - use views and functions
+- **Audit database access** and changes
+
+### **SQL Injection Prevention**
+- **Use parameterized queries** (prepared statements)
+- **Validate and sanitize** all user input
+- **Use ORM frameworks** that handle parameterization
+- **Never concatenate** user input into SQL strings
+
+### **Data Encryption**
+- **Encrypt sensitive data** at rest and in transit
+- **Use SSL/TLS** for database connections
+- **Consider column-level encryption** for highly sensitive data
+- **Implement proper key management**
+
+## 📝 Migration and Versioning
+
+### **Migration Files**
+- **Use sequential numbering** for migration files
+- **Include both up and down** migrations
+- **Test migrations** in development environment
+- **Backup production data** before applying migrations
+
+### **Version Control**
+- **Store migration files** in version control
+- **Document migration purpose** and dependencies
+- **Test rollback procedures** before production deployment
+- **Use transaction blocks** for multi-statement migrations
+
+## 📊 Monitoring and Maintenance
+
+### **Performance Monitoring**
+- **Monitor query performance** using pg_stat_statements
+- **Track table and index usage** statistics
+- **Monitor connection counts** and wait times
+- **Set up alerts** for performance degradation
+
+### **Backup and Recovery**
+- **Regular automated backups** (daily at minimum)
+- **Test restore procedures** regularly
+- **Document recovery procedures** and contacts
+- **Monitor backup success** and completion times
+
+## 📝 Changelog
+
+### [2025-01-27] - Initial Release
+- **Added**: Naming conventions and schema design standards
+- **Added**: Data type recommendations and best practices
+- **Added**: Indexing strategy and performance optimization
+- **Added**: Constraints, validation, and security guidelines
+- **Added**: Migration and monitoring best practices

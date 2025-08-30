@@ -1,0 +1,91 @@
+# General Development Workflow Standards
+
+## 🎯 Purpose
+This file contains general development workflow standards that can be applied across multiple projects and solutions. These are technology-agnostic best practices for software development.
+
+## 📋 Development Process Rules
+- **NO DEVELOPMENT** can begin without a complete plan
+- **ALL TASKS** must have detailed implementation steps before starting
+- **ALL DEPENDENCIES** must be identified and documented
+- **ALL CROSS-PROJECT CHANGES** must be planned in detail
+- **WORKING PLAN** must be updated before any development begins
+
+## 🚀 MVP Development Priority
+**⚠️ CRITICAL: We are building MVPs for user POC**
+- **Feature delivery for user testing** is MORE IMPORTANT than optimization
+- **Working functionality** takes priority over perfect code
+- **User feedback** is more valuable than code perfection
+- **Ship features** that demonstrate core value proposition
+- **Optimize later** after user validation
+
+## 📚 Documentation Standards
+- **ALWAYS update documentation** when making code changes
+- **ALWAYS add changelog entries** to updated documents
+- **ALWAYS verify documentation accuracy** against implementation
+- **ALWAYS maintain cross-references** between related documents
+- **ALWAYS use consistent formatting** across all documentation
+- **ALWAYS suggest documentation updates** for new features or changes
+
+## 🧪 Testing & Quality Standards
+- **ALWAYS implement tests** for all new business logic and service methods
+- **ALWAYS create unit tests** for complex coordination logic
+- **ALWAYS validate algorithms** with comprehensive testing
+- **ALWAYS mock external dependencies** for isolated testing
+- **ALWAYS test both positive and negative** scenarios
+- **ALWAYS aim for 90%+ test coverage** for new functionality
+- **NEVER change code to fix a test** unless the code has been proven broken by the test
+
+## 🔒 Risk Management
+- **ALWAYS be extremely risk averse** when making design choices
+- **ALWAYS refer to existing code** for examples
+- **ALWAYS use best practices** and established patterns from the existing codebase
+- **ALWAYS use existing code** for examples when making design choices
+
+## 📊 Project Management
+- **PERIODICALLY CHECK** all active change files for overdue items
+- **ALWAYS NOTIFY USER** when completion dates are approaching (within 2 days)
+- **ALWAYS NOTIFY USER** when completion dates are past due
+- When starting new development work, first update the working plan with detailed steps
+- When completing a task, update status and add completion date
+- When discovering new requirements, add them as new tasks with proper planning
+- When working on a task, ensure all implementation steps are defined first
+
+## 🔄 Code Review Standards
+- **ALWAYS do code review** to see what's already been implemented
+- **ALWAYS verify current project state** before assuming what needs to be implemented
+- **ALWAYS identify documentation** that needs updates when making code changes
+- **ALWAYS maintain consistency** with existing codebase patterns
+
+## 📁 File Organization
+- **ALWAYS use consistent naming conventions** across the project
+- **ALWAYS organize related functionality** into logical groups
+- **ALWAYS maintain clear separation** between different concerns
+- **ALWAYS use descriptive names** for files, classes, and methods
+
+## 🚨 Error Handling
+- **ALWAYS implement proper error handling** for all operations
+- **ALWAYS log errors** with appropriate detail and context
+- **ALWAYS provide user-friendly error messages** when appropriate
+- **ALWAYS handle edge cases** and unexpected scenarios gracefully
+
+## 📈 Performance Considerations
+- **ALWAYS consider performance implications** of design decisions
+- **ALWAYS profile critical paths** before optimization
+- **ALWAYS measure before and after** any performance changes
+- **ALWAYS prioritize correctness** over premature optimization
+
+## 🔧 Maintenance
+- **ALWAYS keep dependencies updated** to latest stable versions
+- **ALWAYS remove unused code** and dependencies
+- **ALWAYS refactor** when code becomes difficult to understand
+- **ALWAYS maintain consistent coding style** across the project
+
+## 📝 Changelog
+
+### [2025-01-27] - Initial Release
+- **Added**: Complete development workflow standards
+- **Added**: MVP development priority guidelines
+- **Added**: Documentation and testing standards
+- **Added**: Risk management and project management rules
+- **Added**: Code review and file organization standards
+- **Added**: Error handling and performance guidelines
