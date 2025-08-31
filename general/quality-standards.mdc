@@ -1,3 +1,9 @@
+---
+description: Quality standards for code quality, maintainability, and reliability
+globs: ["**/*.cs", "**/*.js", "**/*.ts", "**/*.py", "**/*.java", "**/*.go"]
+alwaysApply: true
+---
+
 # Quality Standards
 
 ## 🎯 Purpose
@@ -139,12 +145,3 @@ This file contains common quality standards that ensure code quality, maintainab
 - **Code Review**: All changes reviewed and approved
 - **Performance Tests**: Performance requirements met
 - **Security Scan**: No security vulnerabilities detected
-
-## 📝 Changelog
-
-### [2025-01-27] - Initial Release
-- **Added**: Testing standards and coverage requirements
-- **Added**: Code quality and review standards
-- **Added**: Error handling and logging standards
-- **Added**: Performance and maintenance standards
-- **Added**: Quality metrics and assurance process

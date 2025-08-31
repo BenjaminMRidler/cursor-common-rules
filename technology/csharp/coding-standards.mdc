@@ -1,3 +1,9 @@
+---
+description: C# coding standards and best practices for consistency and maintainability
+globs: ["**/*.cs", "**/*.csproj", "**/*.sln"]
+alwaysApply: false
+---
+
 # C# Coding Standards
 
 ## 🎯 Purpose
@@ -232,13 +238,3 @@ public async Task<User> GetUserAsync(int userId)
 - **Use Task.Run** sparingly for CPU-bound operations
 - **Configure await** appropriately for library vs. application code
 - **Handle cancellation** using CancellationToken
-
-## 📝 Changelog
-
-### [2025-01-27] - Initial Release
-- **Added**: Naming conventions and code organization standards
-- **Added**: Async/await patterns and exception handling
-- **Added**: SOLID principles implementation guidelines
-- **Added**: Testing standards and naming conventions
-- **Added**: XML documentation requirements
-- **Added**: Security considerations and performance guidelines

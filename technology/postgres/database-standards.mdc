@@ -1,3 +1,9 @@
+---
+description: PostgreSQL database standards and best practices for consistency and performance
+globs: ["**/*.sql", "**/migrations/**/*", "**/seeds/**/*", "**/schema/**/*"]
+alwaysApply: false
+---
+
 # PostgreSQL Database Standards
 
 ## 🎯 Purpose
@@ -212,12 +218,3 @@ ALTER TABLE users ADD CONSTRAINT uk_users_email_active UNIQUE (email) WHERE dele
 - **Test restore procedures** regularly
 - **Document recovery procedures** and contacts
 - **Monitor backup success** and completion times
-
-## 📝 Changelog
-
-### [2025-01-27] - Initial Release
-- **Added**: Naming conventions and schema design standards
-- **Added**: Data type recommendations and best practices
-- **Added**: Indexing strategy and performance optimization
-- **Added**: Constraints, validation, and security guidelines
-- **Added**: Migration and monitoring best practices

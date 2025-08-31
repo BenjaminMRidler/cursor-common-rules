@@ -6,28 +6,28 @@ This repository contains **common rules and standards** that can be shared acros
 ## 📁 Repository Structure
 
 ### **General Rules (Reusable Across Projects)**
-- **`general/development-workflow.md`** ← Development process and workflow standards
-- **`general/documentation-standards.md`** ← Documentation requirements and formats
-- **`general/quality-standards.md`** ← Code quality and review standards
+- **`general/development-workflow.mdc`** ← Development process and workflow standards
+- **`general/documentation-standards.mdc`** ← Documentation requirements and formats
+- **`general/quality-standards.mdc`** ← Code quality and review standards
 
 ### **Technology-Specific Rules**
 - **`technology/csharp/`** ← C# development standards and patterns
-  - **`coding-standards.md`** ← C# coding conventions and best practices
-  - **`service-patterns.md`** ← Service layer architecture patterns
-  - **`testing-guidelines.md`** ← Unit and integration testing standards
+  - **`coding-standards.mdc`** ← C# coding conventions and best practices
+  - **`service-patterns.mdc`** ← Service layer architecture patterns (planned)
+  - **`testing-guidelines.mdc`** ← Unit and integration testing standards (planned)
 - **`technology/postgres/`** ← PostgreSQL database standards
-  - **`database-standards.md`** ← Database design principles
-  - **`schema-conventions.md`** ← Table and column naming conventions
-  - **`performance-guidelines.md`** ← Query optimization and indexing
+  - **`database-standards.mdc`** ← Database design principles
+  - **`schema-conventions.mdc`** ← Table and column naming conventions (planned)
+  - **`performance-guidelines.mdc`** ← Query optimization and indexing (planned)
 - **`technology/dotnet/`** ← .NET framework standards
-  - **`project-structure.md`** ← Solution and project organization
-  - **`dependency-injection.md`** ← DI container patterns
-  - **`configuration-patterns.md`** ← App settings and configuration
+  - **`project-structure.mdc`** ← Solution and project organization (planned)
+  - **`dependency-injection.mdc`** ← DI container patterns (planned)
+  - **`configuration-patterns.mdc`** ← App settings and configuration (planned)
 
 ### **Shared Patterns (Common Across Technologies)**
-- **`shared/git-workflow.md`** ← Git branching and commit standards
-- **`shared/code-review-standards.md`** ← Code review process and criteria
-- **`shared/deployment-guidelines.md`** ← Deployment and release standards
+- **`shared/git-workflow.mdc`** ← Git branching and commit standards
+- **`shared/code-review-standards.mdc`** ← Code review process and criteria (planned)
+- **`shared/deployment-guidelines.mdc`** ← Deployment and release standards (planned)
 
 ## 🚀 Quick Start for Projects
 
@@ -39,9 +39,9 @@ git submodule add https://github.com/[username]/cursor-common-rules .cursor/rule
 ### **2. Reference in Project Rules**
 ```markdown
 ## Common Rules Reference
-- **General**: See `common/general/development-workflow.md`
-- **C# Standards**: See `common/technology/csharp/coding-standards.md`
-- **Database**: See `common/technology/postgres/database-standards.md`
+- **General**: See `common/general/development-workflow.mdc`
+- **C# Standards**: See `common/technology/csharp/coding-standards.mdc`
+- **Database**: See `common/technology/postgres/database-standards.mdc`
 ```
 
 ### **3. Override When Needed**
@@ -89,6 +89,12 @@ Create matching files in `.cursor/rules/overrides/` to customize for your projec
 - **Support**: Check existing documentation and examples first
 
 ## 📝 Changelog
+
+### [2025-08-31] - Converted to .mdc Format
+- **Changed**: All rule files converted from .md to .mdc format for Cursor compatibility
+- **Added**: Proper Cursor rule metadata with description, globs, and alwaysApply settings
+- **Updated**: README documentation to reflect .mdc file structure
+- **Maintained**: All existing rule content and standards
 
 ### [2025-01-27] - Initial Release
 - **Added**: Complete rule structure and organization

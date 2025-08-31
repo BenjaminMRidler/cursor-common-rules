@@ -1,3 +1,9 @@
+---
+description: Documentation standards for consistency, clarity, and maintainability
+globs: ["**/*.md", "**/*.txt", "**/docs/**/*", "**/*.rst"]
+alwaysApply: true
+---
+
 # Documentation Standards
 
 ## 🎯 Purpose
@@ -127,12 +133,3 @@ This file contains common documentation standards that ensure consistency, clari
 - **Completeness**: Percentage of required sections present
 - **Currency**: Percentage of documentation updated in last 30 days
 - **Usability**: User feedback on documentation clarity
-
-## 📝 Changelog
-
-### [2025-01-27] - Initial Release
-- **Added**: Core documentation principles and standards
-- **Added**: Documentation types and format standards
-- **Added**: Review process and quality standards
-- **Added**: Changelog requirements and format
-- **Added**: Documentation metrics and coverage tracking

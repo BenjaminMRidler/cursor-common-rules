@@ -1,3 +1,9 @@
+---
+description: General development workflow standards and best practices
+globs: ["**/*.cs", "**/*.js", "**/*.ts", "**/*.py", "**/*.md"]
+alwaysApply: true
+---
+
 # General Development Workflow Standards
 
 ## 🎯 Purpose
@@ -79,13 +85,3 @@ This file contains general development workflow standards that can be applied ac
 - **ALWAYS remove unused code** and dependencies
 - **ALWAYS refactor** when code becomes difficult to understand
 - **ALWAYS maintain consistent coding style** across the project
-
-## 📝 Changelog
-
-### [2025-01-27] - Initial Release
-- **Added**: Complete development workflow standards
-- **Added**: MVP development priority guidelines
-- **Added**: Documentation and testing standards
-- **Added**: Risk management and project management rules
-- **Added**: Code review and file organization standards
-- **Added**: Error handling and performance guidelines
