@@ -85,3 +85,13 @@ This file contains general development workflow standards that can be applied ac
 - **ALWAYS remove unused code** and dependencies
 - **ALWAYS refactor** when code becomes difficult to understand
 - **ALWAYS maintain consistent coding style** across the project
+
+## 💻 Terminal Command Best Practices
+- **ALWAYS use focused builds** (e.g., `dotnet build ProjectName --no-restore --verbosity quiet`) instead of full solution builds
+- **ALWAYS use linting tools** (`read_lints`) to catch compilation errors quickly before running builds
+- **ALWAYS prefer quick compilation checks** over long-running full builds when possible
+- **ALWAYS use background execution** (`is_background: true`) for long-running commands that don't need immediate output
+- **ALWAYS use PowerShell syntax** for Windows environments (avoid `&&` operators)
+- **ALWAYS check exit codes** and handle command failures gracefully
+- **ALWAYS use specific project builds** instead of solution-wide builds when testing individual components
+- **ALWAYS prefer incremental approaches** - test small changes before larger builds
