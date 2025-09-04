@@ -32,39 +32,72 @@ This file contains common C# coding standards and best practices that ensure con
 - **One class per file** - file name should match class name
 - **Namespace organization** - group related classes in logical namespaces
 - **Using statements** - organize alphabetically and group by source
-- **Region usage** - use regions sparingly, prefer logical organization
+- **MANDATORY regions** - every C# file MUST use regions for organization
 
-### **Class Organization**
+### **MANDATORY Class Organization Standards**
+- **ALWAYS use regions** to organize class members
+- **ALWAYS organize methods** into Public and Private regions
+- **ALWAYS organize properties and fields** into separate regions
+- **ALWAYS maintain alphabetical order** within each region
+- **ALWAYS group related members** logically within regions
+
+### **Required Region Structure**
 ```csharp
 public class ExampleService
 {
-    // Constants
-    private const int MaxRetries = 3;
-    
-    // Private fields
+    #region Fields
     private readonly ILogger<ExampleService> _logger;
     private readonly IConfiguration _configuration;
-    
-    // Constructor
+    private const int MaxRetries = 3;
+    #endregion
+
+    #region Properties
+    public string ServiceName { get; set; }
+    public bool IsEnabled { get; set; }
+    #endregion
+
+    #region Constructors
     public ExampleService(ILogger<ExampleService> logger, IConfiguration configuration)
     {
         _logger = logger;
         _configuration = configuration;
     }
-    
-    // Public methods
+    #endregion
+
+    #region Public Methods
     public async Task<Result> ProcessDataAsync(DataRequest request)
     {
         // Implementation
     }
-    
-    // Private methods
+
+    public void ValidateConfiguration()
+    {
+        // Implementation
+    }
+    #endregion
+
+    #region Private Methods
     private async Task<DataResult> ValidateDataAsync(DataRequest request)
     {
         // Implementation
     }
+
+    private void LogError(string message)
+    {
+        // Implementation
+    }
+    #endregion
 }
 ```
+
+### **Region Organization Rules**
+- **Fields Region**: All private fields, constants, and static fields in alphabetical order
+- **Properties Region**: All public and private properties in alphabetical order
+- **Constructors Region**: All constructors (typically only one)
+- **Public Methods Region**: All public methods in alphabetical order
+- **Private Methods Region**: All private methods in alphabetical order
+- **Nested Classes Region**: Any nested classes (if applicable)
+- **Events Region**: Any events (if applicable)
 
 ## 🔧 Language Features
 
