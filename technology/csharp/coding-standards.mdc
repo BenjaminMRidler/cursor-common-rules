@@ -244,6 +244,32 @@ public async Task<User> GetUserAsync(int userId)
 }
 ```
 
+## 🚨 CRITICAL: TODO Comments and Incomplete Implementation
+
+### **NEVER Use TODO Comments in Production Code**
+- **NEVER EVER** put TODO comments in place of actual implementation
+- **NEVER** leave methods with TODO comments that could cause data corruption or silent failures
+- **ALWAYS** implement complete functionality or explicitly discuss what's not implemented
+- **ALWAYS** throw NotImplementedException if functionality is intentionally incomplete
+- **ALWAYS** document incomplete features clearly in conversation before implementation
+
+### **Implementation Completeness Rules**
+- **When told something is "complete" - it MUST be complete**
+- **No silent failures** - if something can't be implemented, discuss it explicitly
+- **No placeholder code** that could compromise data integrity
+- **No TODO comments** that could cause production issues
+
+```csharp
+// ❌ NEVER DO THIS - Silent failure that could corrupt data
+FromEntityId = Guid.Empty, // TODO: Need to map from ExtractedEntity IDs to actual Entity IDs
+
+// ✅ DO THIS INSTEAD - Explicit implementation or discussion
+FromEntityId = MapEntityId(er.FromEntity, entityIdMapping),
+
+// ✅ OR THIS - Explicit incomplete implementation
+throw new NotImplementedException("Entity ID mapping not yet implemented - requires discussion");
+```
+
 ## 🔒 Security Considerations
 
 ### **Input Validation**
