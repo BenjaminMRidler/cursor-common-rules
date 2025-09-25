@@ -297,3 +297,50 @@ throw new NotImplementedException("Entity ID mapping not yet implemented - requi
 - **Use Task.Run** sparingly for CPU-bound operations
 - **Configure await** appropriately for library vs. application code
 - **Handle cancellation** using CancellationToken
+
+## 🗄️ Entity Framework Core Query Guidelines
+
+### **Query Translation Issues**
+- **NEVER use nested `Any()` operations** with custom functions like `TrigramsSimilarity`
+- **NEVER use `Contains()` with collection variables** in LINQ expressions (causes subquery translation issues)
+- **ALWAYS use explicit `Join()` operations** instead of nested `Any()` for complex filtering
+- **Prefer explicit joins over subqueries** for better SQL translation
+
+### **Collection Filtering Patterns**
+- **Use `Union()` pattern for OR logic** when filtering with collections:
+```csharp
+IQueryable<T>? combinedQuery = null;
+foreach (var item in collection)
+{
+    var singleQuery = baseQuery.Where(/* single item condition */);
+    combinedQuery = combinedQuery?.Union(singleQuery) ?? singleQuery;
+}
+```
+
+### **Query Organization**
+- **Use query root methods** for consistent includes and base filtering
+- **Apply `Distinct()` after unions** to eliminate duplicates
+- **Structure complex queries** using explicit joins rather than subqueries
+
+### **Example: Correct Union Pattern for EF Core**
+```csharp
+// ❌ WRONG - Causes translation exception
+var entityAttributes = _context.EntityAttributes.Where(ea =>
+    attrList.Any(attr => 
+        ea.Attribute.Name == attr.Name &&
+        EF.Functions.TrigramsSimilarity(ea.Value, attr.Value) >= 0.3));
+
+// ✅ CORRECT - Uses union pattern for OR logic
+IQueryable<EntityAttribute>? eaQuery = null;
+foreach (var attr in attrList)
+{
+    var singleAttrQuery = GetEntityAttributeQueryRoot(userId)
+        .Where(ea =>
+            ea.Attribute != null &&
+            ea.Attribute.Name == attr.Name &&
+            EF.Functions.TrigramsSimilarity(ea.Value, attr.Value) >= 0.3);
+            
+    eaQuery = eaQuery?.Union(singleAttrQuery) ?? singleAttrQuery;
+}
+query = query.Join(eaQuery, e => e.Id, ea => ea.EntityId, (e, ea) => e).Distinct();
+```
